@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>게시판 수정하기!</title>
+</head>
+<body>
+{% extends 'home/index.html'  %}
+
+{% block contents %}
+<div>게시판 글쓰기!</div>
+<form action="" method="POST">
+    {% csrf_token %}
+
+    {% for form in forms %}
+    <div>
+        <label for="{{ form.id_for_label }}">{{ form.label }}</label>
+        {{ form }}
+    </div>
+    {% endfor %}
+
+    {% if error %}
+    {{ error }}
+    {% endif %}
+    <button type="submit">수정</button>
+</form>
+{% endblock contents %}
+</body>
+</html>

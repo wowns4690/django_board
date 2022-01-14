@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% extends 'home/index.html'  %}
+
+{% block contents %}
+<div>게시판!</div>
+<div><a href="{% url 'board:board_write' %}"><button>글쓰기</button></a></div>
+<div style="border: 1px black solid; margin: 20px 0px;"></div>
+
+<!-- 게시글 목록 -->
+{% for board in boards %}
+<div style="text-align: center;">
+    <a href="/board/detail/{{ board.pk }}?page={{ now_page }}" style="color: black;">
+        <tr>
+            <td>{{ board.title }}</td>
+            <td>{{ board.writer.user_name }}</td>
+            <td>{{ board.write_dttm|date:"Y-m-d" }}</td>
+        </tr>
+    </a>
+</div>
+{% endfor %}
+
+<!-- 페이지 버튼 -->
+{% include 'board/pagination.html' %}
+{% endblock contents %}
+</body>
+</html>

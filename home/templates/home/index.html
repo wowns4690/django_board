@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+</head>
+<body>
+    <h1>Hello World!</h1>
+    <a href="/"><button>홈으로</button></a>
+    <a href="{% url 'board:board_list' %}"><button>게시판</button></a>
+
+    {% if login_session %}
+    <a href="{% url 'user:logout' %}"><button>로그아웃</button></a>
+    {% else %}
+    <a href="{% url 'user:login' %}"><button>로그인</button></a>
+    <a href="{% url 'user:register' %}"><button>회원가입</button></a>
+    {% endif %}
+
+    <div style="border: 1px black solid; margin: 20px 0px;"></div>
+    {% block contents %}
+    <input type="text" id="ajaxtest" name="text">
+    <button onclick="fntest();">보내기</button>
+    {% endblock contents %}
+
+
+</body>
+<script>
+    function fntest(){
+        data = $("#ajaxtest").val();
+        $.ajax({
+            url : '/home/ajax',
+            type: 'POST',
+            data : JSON.stringify(data),
+            success : function(data){
+                alert(data.msg);
+                $("#ajaxtest").val("");
+                $("#ajaxtest").focus();
+            },
+            error: function(){
+                alert("실패!")
+            }
+        });
+    }
+</script>
+</html>
